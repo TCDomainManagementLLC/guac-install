@@ -173,8 +173,11 @@ echo -e "${BLUE}Downloading Files...${NC}"
 
 # Get from GIT
 git clone https://github.com/TCDomainManagementLLC/guacamole-server.git
+cd guacamole-server/
+autoreconf -fi
+cd ..
 mv guacamole-server/ guacamole-server-1.0.0
- 
+
 # Download Guacamole Server
 #wget -q --show-progress -O guacamole-server-${GUACVERSION}.tar.gz ${SERVER}/source/guacamole-server-${GUACVERSION}.tar.gz
 #if [ $? -ne 0 ]; then
