@@ -171,14 +171,18 @@ fi
 SERVER="http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUACVERSION}"
 echo -e "${BLUE}Downloading Files...${NC}"
 
+# Get from GIT
+git clone https://github.com/TCDomainManagementLLC/guacamole-server.git
+mv guacamole-server/ guacamole-server-1.0.0
+ 
 # Download Guacamole Server
-wget -q --show-progress -O guacamole-server-${GUACVERSION}.tar.gz ${SERVER}/source/guacamole-server-${GUACVERSION}.tar.gz
-if [ $? -ne 0 ]; then
-    echo -e "${RED}Failed to download guacamole-server-${GUACVERSION}.tar.gz"
-    echo -e "${SERVER}/source/guacamole-server-${GUACVERSION}.tar.gz${NC}"
-    exit 1
-fi
-echo -e "${GREEN}Downloaded guacamole-server-${GUACVERSION}.tar.gz${NC}"
+#wget -q --show-progress -O guacamole-server-${GUACVERSION}.tar.gz ${SERVER}/source/guacamole-server-${GUACVERSION}.tar.gz
+#if [ $? -ne 0 ]; then
+#    echo -e "${RED}Failed to download guacamole-server-${GUACVERSION}.tar.gz"
+#    echo -e "${SERVER}/source/guacamole-server-${GUACVERSION}.tar.gz${NC}"
+#    exit 1
+#fi
+#echo -e "${GREEN}Downloaded guacamole-server-${GUACVERSION}.tar.gz${NC}"
 
 # Download Guacamole Client
 wget -q --show-progress -O guacamole-${GUACVERSION}.war ${SERVER}/binary/guacamole-${GUACVERSION}.war
@@ -201,12 +205,8 @@ echo -e "${GREEN}Downloaded guacamole-auth-jdbc-${GUACVERSION}.tar.gz${NC}"
 echo -e "${GREEN}Downloading complete.${NC}"
 
 # Extract Guacamole files
-tar -xzf guacamole-server-${GUACVERSION}.tar.gz
+#tar -xzf guacamole-server-${GUACVERSION}.tar.gz
 tar -xzf guacamole-auth-jdbc-${GUACVERSION}.tar.gz
-
-#Remove Bad Row
-# sed '${/ubuntu/d;}' /home/console/guacamole-server-1.0.0/src/guacenc/guacenc.c
-
 
 # Make directories
 mkdir -p /etc/guacamole/lib
