@@ -144,7 +144,6 @@ curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 #Ubuntu 18.10
 sudo curl https://packages.microsoft.com/config/ubuntu/18.10/prod.list > /etc/apt/sources.list.d/mssql-release.list
 
-exit
 sudo apt-get update
 sudo ACCEPT_EULA=Y apt-get install msodbcsql17
 # optional: for bcp and sqlcmd
@@ -153,7 +152,8 @@ echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
 echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 source ~/.bashrc
 # optional: for unixODBC development headers
-sudo apt-get install unixodbc-dev mssql-tools
+sudo apt-get install unixodbc-dev
+sudo apt-get install mssql-tools
 # END MS SQL INSTALL
 
 
@@ -200,6 +200,10 @@ echo -e "${GREEN}Downloading complete.${NC}"
 # Extract Guacamole files
 tar -xzf guacamole-server-${GUACVERSION}.tar.gz
 tar -xzf guacamole-auth-jdbc-${GUACVERSION}.tar.gz
+
+#Remove Bad Row
+# sed '${/ubuntu/d;}' /home/console/guacamole-server-1.0.0/src/guacenc/guacenc.c
+
 
 # Make directories
 mkdir -p /etc/guacamole/lib
