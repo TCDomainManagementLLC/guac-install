@@ -279,7 +279,7 @@ echo ${SQLCODE} | mysql -u root -p${mysqlrootpassword}
 
 # Add Guacamole schema to newly created database
 echo -e "Adding db tables..."
-cat guacamole-auth-jdbc-${GUACVERSION}/mysql/schema/*.sql | mysql -u root -p${mysqlrootpassword} ${DB}
+cat guacamole-auth-jdbc-${GUACVERSION}/mssql/schema/*.sql | mssql -u root -p${mysqlrootpassword} ${DB}
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed${NC}"
     exit 1
