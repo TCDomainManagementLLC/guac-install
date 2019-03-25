@@ -259,7 +259,7 @@ mv guacamole-${GUACVERSION}.war /etc/guacamole/guacamole.war
 ln -s /etc/guacamole/guacamole.war /var/lib/${TOMCAT}/webapps/
 ln -s /usr/local/lib/freerdp/guac*.so /usr/lib/${BUILD_FOLDER}/freerdp/
 #ln -s /usr/share/java/mysql-connector-java.jar /etc/guacamole/lib/
-cp guacamole-auth-jdbc-${GUACVERSION}/mssql/guacamole-auth-jdbc-mssql-${GUACVERSION}.jar /etc/guacamole/extensions/
+cp guacamole-auth-jdbc-${GUACVERSION}/sqlserver/guacamole-auth-jdbc-sqlserver-${GUACVERSION}.jar /etc/guacamole/extensions/
 
 # Configure guacamole.properties
 echo "mssql-hostname: localhost" >> /etc/guacamole/guacamole.properties
@@ -293,7 +293,7 @@ echo ${SQLCODE} | mssql -u guac -p${mysqlrootpassword}
 
 # Add Guacamole schema to newly created database
 echo -e "Adding db tables..."
-cat guacamole-auth-jdbc-${GUACVERSION}/mssql/schema/*.sql | mssql -u root -p${mysqlrootpassword} ${DB}
+cat guacamole-auth-jdbc-${GUACVERSION}/sqlserver/schema/*.sql | mssql -u root -p${mysqlrootpassword} ${DB}
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed${NC}"
     exit 1
