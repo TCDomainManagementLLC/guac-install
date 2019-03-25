@@ -1,5 +1,8 @@
 #!/bin/bash
-
+sudo lsof /var/lib/dpkg/lock
+sudo rm /var/lib/dpkg/lock
+sudo dpkg --configure -a
+ 
 # Check if user is root or sudo
 if ! [ $(id -u) = 0 ]; then echo "Please run this script as sudo or root"; exit 1 ; fi
 
