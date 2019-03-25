@@ -78,6 +78,10 @@ then
     then
         sed -i 's/bionic main$/bionic main universe/' /etc/apt/sources.list
     fi
+    if [[ "${VERSION_ID}" == "18.10" ]]
+    then
+        sed -i 's/bionic main$/bionic main universe/' /etc/apt/sources.list
+    fi
     if [[ "${VERSION_ID}" == "16.04" ]]
     then
         LIBPNG="libpng12-dev"
@@ -275,7 +279,7 @@ GRANT SELECT,INSERT,UPDATE,DELETE ON guacamole_db.* TO 'guacamole_user'@'localho
 flush privileges;"
 
 # Execute SQL code
-echo ${SQLCODE} | mysql -u root -p${mysqlrootpassword}
+echo ${SQLCODE} | mssql -u guac -p${mysqlrootpassword}
 
 # Add Guacamole schema to newly created database
 echo -e "Adding db tables..."
