@@ -42,9 +42,9 @@ else
     echo
     while true
     do
-        read -s -p "Enter a MySQL ROOT Password: " mysqlrootpassword
+        read -s -p "Enter a MsSQL ROOT Password: " mysqlrootpassword
         echo
-        read -s -p "Confirm MySQL ROOT Password: " password2
+        read -s -p "Confirm MsSQL ROOT Password: " password2
         echo
         [ "$mysqlrootpassword" = "$password2" ] && break
         echo "Passwords don't match. Please try again."
@@ -119,27 +119,26 @@ echo -e "${BLUE}Installing dependencies. This might take a few minutes...${NC}"
 
 apt-get -y install build-essential libcairo2-dev ${JPEGTURBO} ${LIBPNG} libossp-uuid-dev libavcodec-dev libavutil-dev \
 libswscale-dev libfreerdp-dev libpango1.0-dev libssh2-1-dev libtelnet-dev libvncserver-dev libpulse-dev libssl-dev \
-libvorbis-dev libwebp-dev mysql-server mysql-client mysql-common mysql-utilities libmysql-java ${TOMCAT} freerdp-x11 \
+libvorbis-dev libwebp-dev ${TOMCAT} freerdp-x11 \
 ghostscript wget dpkg-dev &>> ${LOG}
 
 #INSTALL MS SQL TOOLS
-sudo su 
+echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+source ~/.bashrc
+
 curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 
 #Download appropriate package for the OS version
 #Choose only ONE of the following, corresponding to your OS version
-
 #Ubuntu 14.04
-curl https://packages.microsoft.com/config/ubuntu/14.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
-
+#curl https://packages.microsoft.com/config/ubuntu/14.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
 #Ubuntu 16.04
-curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
-
+#curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
 #Ubuntu 18.04
-curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+#curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
 
 #Ubuntu 18.10
-curl https://packages.microsoft.com/config/ubuntu/18.10/prod.list > /etc/apt/sources.list.d/mssql-release.list
+sudo curl https://packages.microsoft.com/config/ubuntu/18.10/prod.list > /etc/apt/sources.list.d/mssql-release.list
 
 exit
 sudo apt-get update
@@ -150,7 +149,7 @@ echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
 echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 source ~/.bashrc
 # optional: for unixODBC development headers
-sudo apt-get install unixodbc-dev
+sudo apt-get install unixodbc-dev mssql-tools
 # END MS SQL INSTALL
 
 
@@ -245,15 +244,15 @@ BUILD_FOLDER=$(dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 mv guacamole-${GUACVERSION}.war /etc/guacamole/guacamole.war
 ln -s /etc/guacamole/guacamole.war /var/lib/${TOMCAT}/webapps/
 ln -s /usr/local/lib/freerdp/guac*.so /usr/lib/${BUILD_FOLDER}/freerdp/
-ln -s /usr/share/java/mysql-connector-java.jar /etc/guacamole/lib/
-cp guacamole-auth-jdbc-${GUACVERSION}/mysql/guacamole-auth-jdbc-mysql-${GUACVERSION}.jar /etc/guacamole/extensions/
+#ln -s /usr/share/java/mysql-connector-java.jar /etc/guacamole/lib/
+cp guacamole-auth-jdbc-${GUACVERSION}/mssql/guacamole-auth-jdbc-mssql-${GUACVERSION}.jar /etc/guacamole/extensions/
 
 # Configure guacamole.properties
-echo "mysql-hostname: localhost" >> /etc/guacamole/guacamole.properties
-echo "mysql-port: 3306" >> /etc/guacamole/guacamole.properties
-echo "mysql-database: ${DB}" >> /etc/guacamole/guacamole.properties
-echo "mysql-username: guacamole_user" >> /etc/guacamole/guacamole.properties
-echo "mysql-password: ${guacdbuserpassword}" >> /etc/guacamole/guacamole.properties
+echo "mssql-hostname: localhost" >> /etc/guacamole/guacamole.properties
+echo "mssql-port: 3306" >> /etc/guacamole/guacamole.properties
+echo "mssql-database: ${DB}" >> /etc/guacamole/guacamole.properties
+echo "mssql-username: guacamole_user" >> /etc/guacamole/guacamole.properties
+echo "mssql-password: ${guacdbuserpassword}" >> /etc/guacamole/guacamole.properties
 
 # restart tomcat
 echo -e "${BLUE}Restarting tomcat...${NC}"
