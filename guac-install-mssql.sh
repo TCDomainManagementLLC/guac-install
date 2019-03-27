@@ -262,11 +262,12 @@ ln -s /usr/local/lib/freerdp/guac*.so /usr/lib/${BUILD_FOLDER}/freerdp/
 cp guacamole-auth-jdbc-${GUACVERSION}/sqlserver/guacamole-auth-jdbc-sqlserver-${GUACVERSION}.jar /etc/guacamole/extensions/
 
 # Configure guacamole.properties
-echo "mssql-hostname: localhost" >> /etc/guacamole/guacamole.properties
-echo "mssql-port: 3306" >> /etc/guacamole/guacamole.properties
-echo "mssql-database: ${DB}" >> /etc/guacamole/guacamole.properties
-echo "mssql-username: guacamole_user" >> /etc/guacamole/guacamole.properties
-echo "mssql-password: ${guacdbuserpassword}" >> /etc/guacamole/guacamole.properties
+echo "sqlserver-hostname: localhost" >> /etc/guacamole/guacamole.properties
+echo "sqlserver-port: 3306" >> /etc/guacamole/guacamole.properties
+echo "sqlserver-database: ${DB}" >> /etc/guacamole/guacamole.properties
+echo "sqlserver-username: guacamole_user" >> /etc/guacamole/guacamole.properties
+echo "sqlserver-password: ${guacdbuserpassword}" >> /etc/guacamole/guacamole.properties
+echo "sqlserver-driver: microsoft2005" >> /etc/guacamole/guacamole.properties
 
 # restart tomcat
 echo -e "${BLUE}Restarting tomcat...${NC}"
